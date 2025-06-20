@@ -27,11 +27,11 @@
                         <a class="dropdown-item" href="#"><i class="las la-user me-2"></i> Profile</a>
                         <a class="dropdown-item" href="#"><i class="las la-cog me-2"></i> Settings</a>
                         <div class="dropdown-divider"></div>
-                        <a class="dropdown-item text-danger" href="{{ route('logout') }}"
+                        <a class="dropdown-item text-danger" href="#"
                            onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
                            <i class="las la-sign-out-alt me-2"></i> Logout
                         </a>
-                        <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
+                        <form id="logout-form" action="#" method="POST" class="d-none">
                             @csrf
                         </form>
                     </div>
