@@ -22,7 +22,7 @@
                 </li>
 
                 <li class="nav-item">
-                    <a class="nav-link" href="#">
+                    <a class="nav-link" href="{{ route('branches.index') }}">
                         <i class="iconoir-building me-2"></i> <span>Branch Management</span>
                     </a>
                 </li>
