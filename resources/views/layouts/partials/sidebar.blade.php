@@ -2,9 +2,9 @@
 <div class="startbar d-print-none">
     <div class="brand">
         <a href="{{ url('/dashboard') }}" class="logo d-flex align-items-center">
-            <span><img src="{{ asset('assets/images/logo-sm.png') }}" alt="logo" class="logo-sm"></span>
-            <span><img src="{{ asset('assets/images/logo-light.png') }}" alt="logo" class="logo-lg logo-light"></span>
-            <span><img src="{{ asset('assets/images/logo-dark.png') }}" alt="logo" class="logo-lg logo-dark"></span>
+            <span><img src="{{ asset('assets/logo.png') }}" alt="logo" class="logo-sm"></span>
+            <span><img src="{{ asset('assets/logo.png') }}" alt="logo" class="logo-lg logo-light"></span>
+            <span><img src="{{ asset('assets/logo.png') }}" alt="logo" class="logo-lg logo-dark"></span>
             <span class="fw-bold ms-2 text-dark">STRIVE</span>
         </a>
     </div>

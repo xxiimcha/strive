@@ -21,6 +21,9 @@ class User extends Authenticatable
         'name',
         'email',
         'password',
+        'branch_id',
+        'branch_code',
+        'role',
     ];
 
     /**
@@ -45,4 +48,10 @@ class User extends Authenticatable
             'password' => 'hashed',
         ];
     }
+
+    public function branches()
+    {
+        return $this->belongsToMany(BranchStatus::class, 'branch_user', 'user_id', 'branch_id');
+    }
+
 }

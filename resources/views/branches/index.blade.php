@@ -1,3 +1,5 @@
+{{-- resources/views/branches/index.blade.php --}}
+
 @extends('layouts.app')
 
 @section('title', 'Branch Management')
@@ -7,6 +9,10 @@
     <div class="d-flex justify-content-between align-items-center mb-4">
         <h4 class="page-title">Branch Management</h4>
     </div>
+
+    @if(session('success'))
+        <div class="alert alert-success">{{ session('success') }}</div>
+    @endif
 
     @if(empty($branches))
         <div class="alert alert-warning">
@@ -22,9 +28,7 @@
                         <th>Branch</th>
                         <th>Region</th>
                         <th>Location</th>
-                        <th>Franchisee</th>
-                        <th>Email</th>
-                        <th>Contact</th>
+                        <th>Status</th>
                         <th>Actions</th>
                     </tr>
                 </thead>
@@ -36,20 +40,24 @@
                             <td>{{ $branch['branch'] }}</td>
                             <td>{{ $branch['region'] }}</td>
                             <td>{{ $branch['location'] }}</td>
-                            <td>{{ $branch['franchisee_name'] }}</td>
-                            <td>{{ $branch['email_address'] }}</td>
-                            <td>{{ $branch['contact_number'] }}</td>
+
+                            <td>
+                                <span class="badge bg-{{ $branch['status'] === 'Active' ? 'success' : ($branch['status'] === 'Inactive' ? 'secondary' : 'warning') }}">
+                                    {{ $branch['status'] ?? 'Not Activated' }}
+                                </span>
+                            </td>
+
                             <td>
                                 <div class="btn-group">
                                     <a href="{{ url('/branches/' . $branch['id'] . '/view') }}" class="btn btn-sm btn-outline-primary">View</a>
-                                    <button type="button" class="btn btn-sm btn-outline-secondary dropdown-toggle dropdown-toggle-split" data-bs-toggle="dropdown" aria-expanded="false">
-                                        <span class="visually-hidden">Toggle Dropdown</span>
-                                    </button>
-                                    <ul class="dropdown-menu">
-                                        <li><a class="dropdown-item" href="#">Performance Summary</a></li>
-                                        <li><a class="dropdown-item" href="#">Commission Records</a></li>
-                                        <li><a class="dropdown-item" href="#">Inventory Status</a></li>
-                                    </ul>
+
+                                    @if(empty($branch['status']))
+                                        <form action="{{ route('branches.activate') }}" method="POST" onsubmit="return confirm('Activate this branch?')">
+                                            @csrf
+                                            <input type="hidden" name="branch_id" value="{{ $branch['id'] }}">
+                                            <button type="submit" class="btn btn-sm btn-outline-success">Activate</button>
+                                        </form>
+                                    @endif
                                 </div>
                             </td>
                         </tr>
