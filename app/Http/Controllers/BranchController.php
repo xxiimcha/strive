@@ -64,4 +64,24 @@ class BranchController extends Controller
         return redirect()->back()->with('success', 'Branch activated and user account updated.');
     }
     
+    public function view($id)
+    {
+        $response = Http::get('https://rhc-portal.org/franchises');
+        if ($response->failed()) {
+            return redirect()->route('branches.index')->with('error', 'Unable to fetch branch data.');
+        }
+
+        $branches = $response->json();
+        $branch = collect($branches)->firstWhere('id', (int) $id);
+
+        if (!$branch) {
+            return redirect()->route('branches.index')->with('error', 'Branch not found.');
+        }
+
+        $status = BranchStatus::where('branch_id', $id)->first();
+        $branch['status'] = $status?->status ?? 'Not Activated';
+
+        return view('branches.view', compact('branch'));
+    }
+
 }

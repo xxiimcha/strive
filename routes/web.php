@@ -14,4 +14,5 @@ Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard
 Route::controller(BranchController::class)->prefix('branches')->name('branches.')->group(function () {
     Route::get('/', 'index')->name('index');
     Route::post('/activate', 'activate')->name('activate');
+    Route::get('/{id}/view', 'view')->name('view'); // Added branch view route
 });
