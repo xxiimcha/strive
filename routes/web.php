@@ -3,6 +3,7 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\BranchController;
+use App\Http\Controllers\ServiceTransactionController;
 
 // Login page
 Route::view('/', 'auth.login');
@@ -15,4 +16,11 @@ Route::controller(BranchController::class)->prefix('branches')->name('branches.'
     Route::get('/', 'index')->name('index');
     Route::post('/activate', 'activate')->name('activate');
     Route::get('/{id}/view', 'view')->name('view'); // Added branch view route
+});
+
+Route::prefix('services')->name('services.')->group(function () {
+    Route::get('/', [ServiceTransactionController::class, 'index'])->name('index');
+    Route::post('/store', [ServiceTransactionController::class, 'store'])->name('store');
+    Route::get('/pos', [ServiceTransactionController::class, 'pos'])->name('pos');   // POS layout form
+
 });

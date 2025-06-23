@@ -28,7 +28,7 @@
                 </li>
 
                 <li class="nav-item">
-                    <a class="nav-link" href="#">
+                    <a class="nav-link" href="{{ route('services.index') }}">
                         <i class="iconoir-scissors me-2"></i> <span>Service Transactions</span>
                     </a>
                 </li>
