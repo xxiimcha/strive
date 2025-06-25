@@ -35,15 +35,14 @@ class ServiceTransactionController extends Controller
     {
         // Fetch dynamic services from external API
         $services = Http::get('https://rhc-portal.org/service-pricelists')->json();
-
-        // Group by service category and service name, filter only non-quoted services
+    
+        // Group by category + service name + length type
         $groupedServices = collect($services)
-            ->where('is_quoted', 0)
-            ->groupBy(fn($item) => $item['category'] . ' - ' . $item['service_name']);
-
+            ->groupBy(fn($item) => $item['category'] . ' - ' . $item['service_name'] . ' - ' . $item['length_type']);
+    
         // Static staff list for now
         $staff = ['Anna', 'Ben', 'Carla'];
-
+    
         return view('services.pos', compact('groupedServices', 'staff'));
     }
 }
