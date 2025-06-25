@@ -25,6 +25,6 @@ class ServiceTransaction extends Model
 
     public function transactionLogs()
     {
-        return $this->hasMany(TransactionLog::class, 'transaction_number', 'transaction_number');
+        return $this->hasMany(TransactionLog::class, 'ss_number', 'ss_number');
     }
 }

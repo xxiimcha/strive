@@ -24,7 +24,6 @@
                     <th>OR#</th>
                     <th>SS#</th>
                     <th>Services Availed</th>
-                    <th>Staff(s)</th>
                     <th>Total Amount</th>
                     <th>Individual Staff</th>
                 </tr>
@@ -36,13 +35,6 @@
                         <td><span class="badge bg-info text-dark">{{ $tx['or_number'] }}</span></td>
                         <td><span class="badge bg-dark">{{ $tx['ss_number'] }}</span></td>
                         <td class="text-start">{{ $tx['services'] }}</td>
-                        <td>
-                            @foreach(explode(',', $tx['staff_list']) as $staff)
-                                @if(trim($staff))
-                                    <span class="badge bg-success me-1">{{ trim($staff) }}</span>
-                                @endif
-                            @endforeach
-                        </td>
                         <td class="fw-bold text-end text-success">₱{{ number_format($tx['amount'], 2) }}</td>
                         <td>
                             @foreach($tx['staff_services'] as $pair)

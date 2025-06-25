@@ -15,7 +15,7 @@ class ServiceTransactionController extends Controller
             ->orderByDesc('created_at')
             ->get()
             ->map(function ($tx) {
-                $items = collect($tx->transactionLogs); // plural now
+                $items = collect($tx->transactionLogs); // ✅ plural version
 
                 return [
                     'date' => $tx->created_at->format('Y-m-d'),
@@ -30,7 +30,7 @@ class ServiceTransactionController extends Controller
                     ])->filter(fn ($entry) => $entry['staff'])->values()
                 ];
             });
-            
+
         return view('services.index', compact('transactions'));
     }
 
