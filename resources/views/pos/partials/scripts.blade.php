@@ -98,9 +98,13 @@
         'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').content
         },
         body: JSON.stringify({
-        ss_number: ssNumber,
-        or_number: orNumber,
-        items: items
+          ss_number: ssNumber,
+          or_number: orNumber,
+          customer_name: document.getElementById('customerName')?.value || null,
+          contact: document.getElementById('contactNumber')?.value || null,
+          cash: cash,
+          change: parseFloat(document.getElementById('changeOutput').value),
+          items: items
         })
     })
     .then(response => {
