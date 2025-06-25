@@ -4,24 +4,33 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Http;
+use App\Models\ServiceTransaction;
+use App\Models\TransactionLog;
 
 class ServiceTransactionController extends Controller
 {
     public function index()
     {
-        // Simulated transaction data
-        $transactions = [
-            [
-                'date' => '2025-06-23',
-                'or_number' => '001245',
-                'ss_number' => 'SS876',
-                'services' => 'Haircut, Hair Color',
-                'staff_list' => 'Anna, Belle',
-                'amount' => 1200.00,
-                'individual_staff' => ['Anna', 'Belle', '', '', '', '', '', ''],
-            ],
-        ];
+        $transactions = ServiceTransaction::with(['transactionLogs'])
+            ->orderByDesc('created_at')
+            ->get()
+            ->map(function ($tx) {
+                $items = collect($tx->transactionLogs); // plural now
 
+                return [
+                    'date' => $tx->created_at->format('Y-m-d'),
+                    'or_number' => $tx->or_number,
+                    'ss_number' => $tx->ss_number,
+                    'services' => $items->pluck('item_name')->implode(', '),
+                    'staff_list' => $items->pluck('staff_name')->filter()->unique()->implode(', '),
+                    'amount' => $tx->total_amount,
+                    'staff_services' => $items->map(fn ($item) => [
+                        'staff' => $item->staff_name,
+                        'service' => $item->item_name
+                    ])->filter(fn ($entry) => $entry['staff'])->values()
+                ];
+            });
+            
         return view('services.index', compact('transactions'));
     }
 

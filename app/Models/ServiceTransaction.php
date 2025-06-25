@@ -23,8 +23,8 @@ class ServiceTransaction extends Model
         'branch_id',
     ];
 
-    public function transactionLog()
+    public function transactionLogs()
     {
-        return $this->belongsTo(TransactionLog::class, 'transaction_log_id');
+        return $this->hasMany(TransactionLog::class, 'transaction_number', 'transaction_number');
     }
 }
