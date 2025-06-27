@@ -11,29 +11,32 @@ class ServiceTransactionController extends Controller
 {
     public function index()
     {
-        $transactions = ServiceTransaction::with(['transactionLogs'])
+        $transactions = ServiceTransaction::with('transactionLogs')
             ->orderByDesc('created_at')
             ->get()
             ->map(function ($tx) {
-                $items = collect($tx->transactionLogs); // ✅ plural version
-
+                $items = collect($tx->transactionLogs);
+    
                 return [
                     'date' => $tx->created_at->format('Y-m-d'),
                     'or_number' => $tx->or_number,
                     'ss_number' => $tx->ss_number,
+                    'customer_name' => $tx->customer_name ?? 'N/A',
+                    'contact' => $tx->contact ?? 'N/A',
                     'services' => $items->pluck('item_name')->implode(', '),
                     'staff_list' => $items->pluck('staff_name')->filter()->unique()->implode(', '),
                     'amount' => $tx->total_amount,
                     'staff_services' => $items->map(fn ($item) => [
                         'staff' => $item->staff_name,
-                        'service' => $item->item_name
+                        'service' => $item->item_name,
+                        'rate' => $item->item_rate,
                     ])->filter(fn ($entry) => $entry['staff'])->values()
                 ];
             });
-
+    
         return view('services.index', compact('transactions'));
     }
-
+    
     public function store(Request $request)
     {
         // Simulated save — no database storage for now

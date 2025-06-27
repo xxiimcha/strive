@@ -13,9 +13,28 @@
     @include('layouts.partials.sidebar')
 
     <div class="page-wrapper">
-        <div class="page-content">
+        <div class="page-content"> {{-- Add vertical spacing --}}
             <div class="container-fluid">
+
+                {{-- Page Title and Breadcrumb (Optional: Show only when section is defined) --}}
+                @hasSection('page-header')
+                    <div class="row mb-3">
+                        <div class="col-sm-12">
+                            <div class="page-title-box d-md-flex justify-content-between align-items-center">
+                                <h4 class="page-title">@yield('page-header')</h4>
+                                <div>
+                                    <ol class="breadcrumb mb-0">
+                                        @yield('breadcrumb')
+                                    </ol>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                @endif
+
+                {{-- Page Content --}}
                 @yield('content')
+
             </div>
         </div>
     </div>
